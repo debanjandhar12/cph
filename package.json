@@ -1,10 +1,10 @@
 {
-    "name": "competitive-programming-helper",
-    "displayName": "Competitive Programming Helper (cph)",
+    "name": "competitive-programming-helper-deba",
+    "displayName": "Competitive Programming Helper Deba (cphd)",
     "description": "Makes judging, compiling, and downloading problems for competitve programming easy. Also supports auto-submit for a few sites.",
     "license": "GPL-3.0-or-later",
     "icon": "icon.png",
-    "publisher": "DivyanshuAgrawal",
+    "publisher": "debanjandhar12",
     "version": "5.0.10",
     "engines": {
         "vscode": "^1.52.0"
@@ -239,7 +239,8 @@
         "ts-loader": "^7.0.5",
         "typescript": "^3.8.3",
         "webpack": "^4.43.0",
-        "webpack-cli": "^3.3.11"
+        "webpack-cli": "^3.3.11",
+        "vsce": "1.84.0"
     },
     "dependencies": {
         "python-shell": "^2.0.2",
@@ -250,6 +251,6 @@
     },
     "repository": {
         "type": "git",
-        "url": "https://github.com/agrawal-d/competitive-programming-helper/"
+        "url": "https://github.com/debanjandhar12/cph"
     }
 }

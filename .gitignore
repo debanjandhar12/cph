@@ -121,6 +121,7 @@ dist
 !.vscode/launch.json
 !.vscode/extensions.json
 *.code-workspace
+.idea
 
 # Local History for Visual Studio Code
 .history/
@@ -129,3 +130,5 @@ dist
 releases/
 
 src/secrets.ts
+
+*.vsix
