@@ -72,3 +72,8 @@ extension does not collect any statistics.
 
 This software is licensed under [GPL Version 3](LICENSE) or later ( at your
 choice ).
+
+# Modifications by Deba
+Generated files by CPCompanion are created as ${Workflow}/${Prob_Name}/Driver.{extn} instead of ${Workflow}/${Prob_Name}.{extn}
+Done by changing companion.ts
+To generate vscx, run ```vsce package````

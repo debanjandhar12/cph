@@ -1,5 +1,9 @@
 # Changelog
 
+## Deba 5.0.7
+
+-   Generated files by CPCompanion are created as ${Workflow}/${Prob_Name}/Driver.{extn} instead of ${Workflow}/${Prob_Name}.{extn}
+
 ## 5.0.7
 
 -   Fix missed messages bug when webview is not focussed.

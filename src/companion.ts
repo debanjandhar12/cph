@@ -4,7 +4,7 @@ import { Problem, CphSubmitResponse, CphEmptyResponse } from './types';
 import { saveProblem } from './parser';
 import * as vscode from 'vscode';
 import path from 'path';
-import { writeFileSync, readFileSync, existsSync } from 'fs';
+import { writeFileSync, readFileSync, existsSync, mkdirSync } from 'fs';
 import { isCodeforcesUrl, randomId } from './utils';
 import {
     getDefaultLangPref,
@@ -135,15 +135,15 @@ export const setupCompanionServer = () => {
     }
 };
 
-export const getProblemFileName = (problem: Problem, ext: string) => {
+export const getProblemFileName = (problem: Problem) => {
     if (isCodeforcesUrl(new URL(problem.url)) && useShortCodeForcesName()) {
-        return `${getProblemName(problem.url)}.${ext}`;
+        return `${getProblemName(problem.url)}`;
     } else {
         console.log(
             isCodeforcesUrl(new URL(problem.url)),
             useShortCodeForcesName(),
         );
-        return `${problem.name.replace(/\W+/g, '_')}.${ext}`;
+        return `${problem.name.replace(/\W+/g, '_')}`;
     }
 };
 
@@ -192,20 +192,25 @@ const handleNewProblem = async (problem: Problem) => {
         const splitUrl = problem.url.split('/');
         problem.name = splitUrl[splitUrl.length - 1];
     }
-    const problemFileName = getProblemFileName(problem, extn);
-    const srcPath = path.join(folder, problemFileName);
+    const problemFileName = getProblemFileName(problem);
+    const srcCodePath = path.join(folder, `${problemFileName}/Driver.${extn}`);
+    const srcFolderPath = path.join(folder, `${problemFileName}`);
 
     // Add fields absent in competitive companion.
-    problem.srcPath = srcPath;
+    problem.srcPath = srcCodePath;
     problem.tests = problem.tests.map((testcase) => ({
         ...testcase,
         id: randomId(),
     }));
-    if (!existsSync(srcPath)) {
-        writeFileSync(srcPath, '');
+    if (!existsSync(srcFolderPath)) {
+        mkdirSync(srcFolderPath)
     }
-    saveProblem(srcPath, problem);
-    const doc = await vscode.workspace.openTextDocument(srcPath);
+    if (!existsSync(srcCodePath)) {
+        writeFileSync(srcCodePath, `// ${problemFileName} - ${problem.url}\n`);
+    }
+    //vscode.window.showInformationMessage(`Created ${srcCodePath}`);
+    saveProblem(srcCodePath, problem);
+    const doc = await vscode.workspace.openTextDocument(srcCodePath);
 
     if (defaultLanguage) {
         const templateLocation = getDefaultLanguageTemplateFileLocation();
@@ -219,7 +224,7 @@ const handleNewProblem = async (problem: Problem) => {
                 const templateContents = readFileSync(
                     templateLocation,
                 ).toString();
-                writeFileSync(srcPath, templateContents);
+                writeFileSync(srcCodePath, templateContents);
             }
         }
     }
