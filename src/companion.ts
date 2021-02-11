@@ -143,7 +143,7 @@ export const getProblemFileName = (problem: Problem) => {
             isCodeforcesUrl(new URL(problem.url)),
             useShortCodeForcesName(),
         );
-        return `${problem.name.replace(/\W+/g, '_')}`;
+        return `${problem.name.trim().replace(/\W+/g, '_')}`;
     }
 };
 
@@ -193,7 +193,7 @@ const handleNewProblem = async (problem: Problem) => {
         problem.name = splitUrl[splitUrl.length - 1];
     }
     const problemFileName = getProblemFileName(problem);
-    const srcCodePath = path.join(folder, `${problemFileName}/Driver.${extn}`);
+    const srcCodePath = path.join(folder, `${problemFileName}/Main.${extn}`);
     const srcFolderPath = path.join(folder, `${problemFileName}`);
 
     // Add fields absent in competitive companion.
